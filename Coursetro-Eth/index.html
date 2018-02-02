@@ -43,24 +43,6 @@
 
        var CoursetroContract = web3.eth.contract([
             {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "_fName",
-                        "type": "string"
-                    },
-                    {
-                        "name": "_age",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "setInstructor",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
                 "constant": true,
                 "inputs": [],
                 "name": "getInstructor",
@@ -94,10 +76,34 @@
                 ],
                 "name": "Instructor",
                 "type": "event"
+            },
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "_fName",
+                        "type": "string"
+                    },
+                    {
+                        "name": "_age",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "setInstructor",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor"
             }
         ]);
 
-        var Coursetro = CoursetroContract.at('0x7a50c16ff8e7262b2fe865aa4bb622a93f3129ac');
+        var Coursetro = CoursetroContract.at('0x3e54fc86f1d57823c2f73409cf28a1a35bd95eef');
         console.log(Coursetro);
 
         var instructorEvent = Coursetro.Instructor();
@@ -113,8 +119,14 @@
         });
 
         $("#button").click(function() {
-            Coursetro.setInstructor($("#name").val(), $("#age").val());
             $("#loader").show();
+            Coursetro.setInstructor($("#name").val(), $("#age").val(), $("#age").val(), (err, res) => {
+                if(err) {
+                    $("#loader").hide();
+                    console.log('oh no')
+                }
+            });
+            
         });
 
     </script>
